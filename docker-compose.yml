@@ -1,8 +1,9 @@
 services:
   web:
     build: .
-    image: localhost/whatever_web_image:latest
-    container_name: whatever_web
+    image: localhost/${PROJECT_NAME}_image:latest
+    container_name: ${PROJECT_NAME}_web
+    restart: unless-stopped
     ports:
       - "8080:80"   # HTTP
       - "8443:443"  # HTTPS
@@ -11,3 +12,7 @@ services:
       - ./certs:/etc/apache2/certs
     environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html
+
+networks:
+  default:
+    name: ${PROJECT_NAME}_network
